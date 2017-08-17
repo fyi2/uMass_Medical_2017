@@ -1,0 +1,68 @@
+
+    'ResetIntent': function () {
+      console.log(`In DEFAULT-RESET the current state handler is ${this.handler.state} changing to undefined`);
+      this.handler.state = constants.states.MAIN
+      this.attributes['STATE'] = constants.states.MAIN
+      this.attributes.defaults = 0
+      this.attributes.direction = 1      // Just set some basic defaults for testing
+      this.attributes.stationList = ['Framingham'];
+      this.attributes.following = false; // No following
+      this.emit(':saveState', true);
+      let speech = new AmazonSpeech();
+      speech.sayAs({"interpret": 'interjection', "word": `bummer`})
+      let speechOutput = speech.ssml(true);
+      this.emit(':tell', speechOutput);
+    },
+
+    'AMAZON.StopIntent': function () {
+      console.log(`In MAIN the current state handler is ${this.handler.state} changing to undefined`);
+      this.handler.state = undefined
+      // State Automatically Saved with :tell
+      let speech = new AmazonSpeech();
+      speech.sayAs({"interpret": 'interjection', "word": `au revoir`})
+      let speechOutput = speech.ssml(true);
+      this.attributes['STATE'] = constants.states.MAIN
+      this.emit(':tell', speechOutput);
+    },
+
+    'AMAZON.CancelIntent': function () {
+      console.log(`In MAIN the current state handler is ${this.handler.state} changing to undefined`);
+      this.handler.state = undefined
+      // State Automatically Saved with :tell
+      let speech = new AmazonSpeech();
+      speech.sayAs({"interpret": 'interjection', "word": `au revoir`})
+      let speechOutput = speech.ssml(true);
+      this.attributes['STATE'] = constants.states.MAIN
+      this.emit(':tell', speechOutput);
+    },
+
+    'SessionEndedRequest': function () {
+      console.log(`In MAIN the current state handler is ${this.handler.state} changing to undefined`);
+      this.handler.state = undefined
+      // Force State to Save when the user times out
+      this.attributes['STATE'] = constants.states.MAIN
+      this.emit(':saveState', true);
+    },
+    'AMAZON.HelpIntent': function () {
+      let speech = new AmazonSpeech();
+      if (Math.random() < 0.25){
+        speech.sayAs({"interpret": 'interjection', "word": `howdy`})
+        speech.pause('250ms')
+      }
+      if (this.attributes['defaults'] > 3){
+        speech.say(`OK there are three core actions, set defaults, listen to alerts or get the next train.  For smart defaults - say set defaults.`)
+        speech.pause('350ms')
+        speech.say(`For alerts you can simply say alerts?`)
+        speech.pause('350ms')
+        speech.say(`or you can say when is the next train from and then say your station name?`)
+      } else {
+        speech.say(`You can set defaults,  alerts, or you can say when is the next train from and then say your station name. How can I help?`)
+    //      this.attributes['defaults'] = 0
+      }
+      let speechOutput = speech.ssml(true);
+      this.emit(':ask', speechOutput,  `say when is the next train from and then say your station name?`);
+    },
+
+    'Unhandled': function () {
+      this.emitWithState('AMAZON.HelpIntent');
+    },

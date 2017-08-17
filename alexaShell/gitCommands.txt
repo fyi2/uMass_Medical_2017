@@ -1,0 +1,27 @@
+git init
+ADD AN APPROPRIATE .gitignore
+git add
+git commit -am "text"
+Set Up a repository in AWS
+#git config --global credential.helper "!aws codecommit credential-helper $@"
+#git config --global credential.UseHttpPath true
+git remote add origin https://git-codecommit.us-east-1.amazonaws.com/v1/repos/REPOSITORYNAME
+git push origin master
+
+remove files commited BEFORE a .gitignore is in place: git ls-files -i --exclude-from=.gitignore | xargs git rm --cached
+
+.git config that works:
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	hideDotFiles = dotGitOnly
+[credential "https://git-codecommit.us-east-1.amazonaws.com"]
+    helper = !aws codecommit credential-helper $@
+    UseHttpPath = true
+[remote "origin"]
+	url = https://git-codecommit.us-east-1.amazonaws.com/v1/repos/alexaShell
+	fetch = +refs/heads/*:refs/remotes/origin/*

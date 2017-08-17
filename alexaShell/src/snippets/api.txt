@@ -1,0 +1,86 @@
+var request = require('request-promise');
+
+module.exports = {
+
+  GetRandomJoke: () => {
+    return new Promise((resolve, reject) => {
+      request({
+        url: "http://quotes.stormconsultancy.co.uk/random.json",
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        // Return User Details
+        resolve(JSON.parse(response));
+      })
+      .catch((error) => {
+        // API Error
+        reject('Joke API Error: ', error);
+      });
+    });
+  }
+};
+
+
+=================
+APIList = APIHelpers.buildAPIList(stationList)
+for(i=0;i<APIList.length;i++){
+  promises.push(APIHelpers.GetStopDetails(
+    APIList[i]))
+    console.log("API CALL Number"+i);
+}
+Promise.all(promises)
+  .then((results) => {
+
+
+------
+var request = require('request-promise');
+var BASE= 'http://realtime.mbta.com/developer/api/v2/'
+var GET_SCHEDULE = 'schedulebystop' // predictionsbystop, alertsbystop
+var GET_PREDICTION = 'predictionsbystop'
+var KEY = '?api_key=mX2K8L6zs0OC5kXPuL_Emg' // Developer's key change for production
+var FORMAT = '&format=json'
+var MAX_TIME = '&max_time=300'
+
+module.exports = {
+
+  buildAPIList: (stations) => {
+    console.log(`STATIONS = ${stations} whose length is ${stations.length}`);
+    var APIs = []
+    if (stations.length == 0){
+      return []
+    }
+    for(i = 0; i<stations.length; i++){
+      // Build Schedule API
+      URL = BASE+GET_SCHEDULE+KEY+"&stop="+stations[i]+FORMAT+MAX_TIME
+      APIs.push(URL)
+      URL = BASE+GET_PREDICTION+KEY+"&stop="+stations[i]+FORMAT
+      APIs.push(URL)
+    }
+    return APIs
+  },
+
+  // Reachout to the MBTA and get the train Details
+
+  GetStopDetails: (api_request) => {
+    return new Promise((resolve, reject) => {
+      request({
+        url: api_request,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        // Return User Details
+        resolve(response);
+      })
+      .catch((error) => {
+        // API Error
+        reject('API Error: ', error);
+      });
+    });
+  },
+}

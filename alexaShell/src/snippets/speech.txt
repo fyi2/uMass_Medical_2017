@@ -1,0 +1,34 @@
+'AlexaHello': function () {
+  let speech = new Speech();
+  speech.say('Hello how about this for a');
+  speech.pause('.5s');
+  speech.sayAs({
+    word: "508-293-1785",
+    interpret: "telephone"
+  });
+  speech.prosody({rate: 'x-slow'},'Guess who I love');
+  speech.pause('.5s');
+  speech.prosody({volume: 'x-loud'},`yes Dave Ramsey`)
+  speech.whisper(`he's the man.`);
+  speech.pause('.5s');
+  speech.sayAs({"interpret": 'interjection', "word": `jiminy cricket`})
+  speech.sayAs({"interpret": 'expletive', "word": `jiminy cricket`})
+  speech.sayAs({
+        "word": "2/9",
+        "interpret": "fraction"
+    });
+    speech.sayAs({
+             "word": "3+1/2",
+             "interpret": "fraction"
+         });
+  speech.prosody({rate: 'x-slow'},'Simply. Mah pleasure');
+  speech.pause('.5s');
+  speech.prosody({volume: 'loud'},`Siobhan`)
+  speech.whisper(`You are such fun.`);
+  let speechOutput = speech.ssml(true);
+  this.emit(':tell', speechOutput);
+
+  let speechOutput = speech.ssml(true);
+  this.emit(':ask', speechOutput,`Ask me what's next`);
+
+},

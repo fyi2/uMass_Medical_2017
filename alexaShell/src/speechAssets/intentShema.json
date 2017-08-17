@@ -1,0 +1,28 @@
+{
+  "intents": [
+    {
+      "intent": "TweetRequest",
+      "slots": [
+        {
+          "name": "Adjective",
+          "type": "TWEET_ADJECTIVE"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+1. Investigate a good invocation
+2. Intents:
+Naming Intents:
+handlerFunction:
+
+Keep the business logic in helper functions
+

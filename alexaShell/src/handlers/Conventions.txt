@@ -1,0 +1,4 @@
+Naming Intents:
+handlerFunction:
+
+Keep the business logic in helper functions
