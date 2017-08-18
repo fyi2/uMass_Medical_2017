@@ -1,0 +1,7 @@
+http server in NGINX
+
+web address is http://34.198.247.179
+
+Jupyter Notebook is https://34.198.247:8888
+
+No valid SSL so click advanced and say yes. Password is 'uMass' (Without the quotes)
